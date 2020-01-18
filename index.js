@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const cors = require('cors')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 
@@ -21,6 +22,7 @@ let persons = [
   }
 ]
 
+app.use(cors())
 app.use(bodyParser.json())
 
 morgan.token('body', (req, res) => req.method === "POST" ? JSON.stringify(req.body) : "")
