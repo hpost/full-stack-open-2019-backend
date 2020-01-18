@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
+const morgan = require('morgan')
 
 let persons = [
   {
@@ -22,14 +23,7 @@ let persons = [
 
 app.use(bodyParser.json())
 
-const requestLogger = (request, response, next) => {
-  console.log('Method:', request.method)
-  console.log('Path:', request.path)
-  console.log('Body:', request.body)
-  console.log('---')
-  next()
-}
-app.use(requestLogger)
+app.use(morgan('tiny'))
 
 app.get('/api/persons', (req, res) => {
   res.json(persons)
