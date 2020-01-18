@@ -44,6 +44,17 @@ app.delete('/api/persons/:id', (req, res) => {
   res.status(204).end()
 })
 
+const generateId = () => {
+  return Math.floor(Math.random() * 100000)
+}
+
+app.post('/api/persons', (req, res) => {
+  const person = req.body
+  person.id = generateId()
+  persons = persons.concat(person)
+  res.status(201).json(person)
+})
+
 app.get('/info', (req, res) => {
   res.send(
     `
