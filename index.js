@@ -49,7 +49,24 @@ const generateId = () => {
 }
 
 app.post('/api/persons', (req, res) => {
-  const person = req.body
+  const body = req.body
+  console.log('adding:', body)
+
+  const hasName = body.name !== null
+  const hasNumber = body.number !== null
+  const isUnique = !persons.some(person => person.name === body.name)
+  console.log('isUnique:', isUnique)
+  if (!hasName || !hasNumber || !isUnique) {
+    return res.status(400).json({
+      error: 'name must be unique'
+    })
+  }
+
+  const person = {
+    id: generateId(),
+    name: body.name,
+    number: body.number
+  }
   person.id = generateId()
   persons = persons.concat(person)
   res.status(201).json(person)
